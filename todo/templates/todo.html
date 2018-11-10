@@ -1,0 +1,67 @@
+<html>
+<style>
+* {
+	box-sizing: border-box;
+}
+
+.column{
+	float: left;
+	width: 33.33%;
+	text-align: center;
+	height: 300px;			/*Hardcoded for now*/
+}
+
+/* Clears all the filters added after row element ends */
+.row:after{
+	content: '';
+	display: table;
+	clear: both;
+}
+</style>
+
+<h1 style="text-align:center;color:aqua;">Simple ToDo App</h1>
+
+<!-- <div class="row">
+	<div class="column" style=background-color:#FF0000;>
+		<h2>ToDo</h2>
+		<ul>
+			<li style="text-align:left;">temp list 1</li>
+			<li style="text-align:left;">temp list 2</li>
+		</ul>
+	</div>
+	<div class="column" style=background-color:#FFFF00;>
+		<h2>Doing</h2>
+	</div>
+	<div class="column" style=background-color:#90EE90;>
+		<h2>Done</h2>
+	</div>
+</div> -->
+
+<div class="row">
+	<div class="column" style=background-color:#FF0000;>
+		<h2>ToDo</h2>
+		<ul>
+			{% for to_do_task in to_do_list %}
+				<li style="text-align:left;">{{ to_do_task.content }}
+					<form style="display:inline;" 
+						  action="/deletetodo/{{to_do_task.id}}/" 
+						  method='post'>{% csrf_token %}
+						<input type='submit' value='Delete'/>
+					</form>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="column" style=background-color:#FFFF00;>
+		<h2>Doing</h2>
+	</div>
+	<div class="column" style=background-color:#90EE90;>
+		<h2>Done</h2>
+	</div>
+</div>
+
+<form action="/addtodo/" method='post'>{% csrf_token %}
+	<input type='text' name='item'/>
+	<input type='submit' value='Add'/>
+</form>
+</html>
